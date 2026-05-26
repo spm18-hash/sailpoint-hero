@@ -1,17 +1,164 @@
 ---
+import "../styles/global.css";
 
+import { Font, Image } from "astro:assets";
+
+import LogoWhite from "../assets/SailPoint-logo-white.svg";
+import LogoColored from "../assets/SailPoint-logo-cropped.svg";
+
+import { ArrowRight, Menu } from "@lucide/astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <Font cssVariable="--font-sans" />
+        <title>Astro</title>
+    </head>
+    <body>
+        <header class="fixed top-0 w-full z-10 transition-colors">
+            <nav
+                class="max-w-360 mx-auto pt-4 pb-5 px-5 flex items-center justify-between"
+            >
+                <a href="/" aria-label="Home">
+                    <LogoWhite class="h-7 w-auto logo-white" />
+                    <LogoColored class="h-7 w-auto logo-colored" />
+                </a>
+
+                <Menu size="28" class="logo-hamburger" color="white" />
+            </nav>
+        </header>
+
+        <div id="scroll-trigger" class="absolute top-4 size-px"></div>
+
+        <main
+            class="bg-linear-[174deg,#00143b_14.41%,#011c48_24.8%,#0033a1_55.88%,#66aae2_100.46%]"
+        >
+            <div
+                class="pt-24 px-5 w-full flex flex-col gap-4 justify-center items-center"
+            >
+                <h1
+                    class="max-lg:max-w-2xl font-semibold text-5xl md:text-7xl/22 sm:text-6xl/18 tracking-tight text-white text-center"
+                >
+                    The new era of adaptive identity
+                </h1>
+                <p class="text-white text-center md:text-lg">
+                    Identity-first security for humans, machines, and AI
+                </p>
+
+                <div
+                    class="max-md:w-full flex flex-col max-md:gap-4 mt-4 md:flex-row items-center"
+                >
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        class="focus:outline-0 flex w-full bg-white placeholder:text-gray-800 text-gray-800 px-4 max-md:py-4 md:h-14 rounded-sm md:rounded-tr-none md:rounded-br-none"
+                    />
+                    <button
+                        class="rounded-sm w-full md:max-w-48 items-center px-4 max-md:py-2.5 md:h-14 justify-center flex md:rounded-tl-none md:rounded-bl-none font-semibold text-white bg-[#cc27b0]"
+                        >Get a demo</button
+                    >
+                </div>
+
+                <a
+                    href="/"
+                    class="inline-flex items-center gap-2 pt-4 py-8 font-semibold text-white"
+                    >Take a product tour <ArrowRight class="w-5" /></a
+                >
+
+                <div
+                    class="w-full sm:max-w-3xl lg:max-w-7xl -mb-1.5 overflow-hidden outline-8 rounded-t-4xl outline-[#54c0e840]"
+                >
+                    <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        disablepictureinpicture
+                        preload="none"
+                        class="max-sm:hidden w-full object-top h-130 object-cover"
+                    >
+                        <source src="/hero.webm" type="video/webm" />
+                        <source src="/hero.mp4" type="video/mp4" />
+                    </video>
+                    <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        disablepictureinpicture
+                        preload="none"
+                        class="w-full object-top sm:hidden h-120 object-cover rounded-t-4xl"
+                    >
+                        <source src="/hero-mobile.webm" type="video/webm" />
+                        <source src="/hero-mobile.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+
+            <div
+                class="relative p-2 text-white bg-linear-[127deg,black_18.73%,#0033a1_90%,#0071ce_116%] w-full"
+            >
+                <div class="flex items-center justify-center gap-5 p-5">
+                    <Image
+                        src={"/event.avif"}
+                        width={240}
+                        height={150}
+                        alt={"event"}
+                        quality={50}
+                        class="max-w-32"
+                    />
+                    <div class="text-white space-y-4 text-sm">
+                        <p>
+                            AI Identity: Vision to action. May 19-21, 2026 |
+                            Virtual Event
+                        </p>
+                        <a
+                            href="/"
+                            class="inline-flex items-center gap-2 font-medium"
+                            >Register now <ArrowRight class="h-5" /></a
+                        >
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>
+
+<style>
+    header.scrolled {
+        background-color: white;
+    }
+</style>
+
+<script>
+    const header = document.querySelector("header");
+    const trigger = document.querySelector("#scroll-trigger");
+    const logoWhite = document.querySelector(".logo-white");
+    const logoColored = document.querySelector(".logo-colored");
+    const logoHamburger = document.querySelector(".logo-hamburger");
+
+    const observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) {
+            header?.classList.add("scrolled");
+
+            logoWhite?.classList.add("hidden");
+            logoColored?.classList.remove("hidden");
+            logoHamburger?.classList.add("stroke-black");
+        } else {
+            header?.classList.remove("scrolled");
+
+            logoWhite?.classList.remove("hidden");
+            logoColored?.classList.add("hidden");
+            logoHamburger?.classList.remove("stroke-black");
+        }
+    });
+
+    if (trigger) {
+        observer.observe(trigger);
+    }
+</script>

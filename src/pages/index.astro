@@ -16,7 +16,7 @@ import { ArrowRight, Menu } from "@lucide/astro";
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <Font cssVariable="--font-sans" />
+        <Font cssVariable="--font-sans" preload />
         <title>Astro</title>
     </head>
     <body>
@@ -71,7 +71,7 @@ import { ArrowRight, Menu } from "@lucide/astro";
                 >
 
                 <div
-                    class="w-full sm:max-w-3xl lg:max-w-7xl -mb-1.5 overflow-hidden outline-8 rounded-t-4xl outline-[#54c0e840]"
+                    class="w-full sm:max-w-4xl lg:max-w-5xl 2xl:max-w-7xl -mb-1.5 overflow-hidden outline-8 rounded-t-4xl outline-[#54c0e840]"
                 >
                     <video
                         autoplay
@@ -82,8 +82,8 @@ import { ArrowRight, Menu } from "@lucide/astro";
                         preload="none"
                         class="max-sm:hidden w-full object-top h-130 object-cover"
                     >
-                        <source src="/hero.webm" type="video/webm" />
-                        <source src="/hero.mp4" type="video/mp4" />
+                        <source src="/videos/hero.webm" type="video/webm" />
+                        <source src="/videos/hero.mp4" type="video/mp4" />
                     </video>
                     <video
                         autoplay
@@ -94,8 +94,14 @@ import { ArrowRight, Menu } from "@lucide/astro";
                         preload="none"
                         class="w-full object-top sm:hidden h-120 object-cover rounded-t-4xl"
                     >
-                        <source src="/hero-mobile.webm" type="video/webm" />
-                        <source src="/hero-mobile.mp4" type="video/mp4" />
+                        <source
+                            src="/videos/hero-mobile.webm"
+                            type="video/webm"
+                        />
+                        <source
+                            src="/videos/hero-mobile.mp4"
+                            type="video/mp4"
+                        />
                     </video>
                 </div>
             </div>

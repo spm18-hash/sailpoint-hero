@@ -169,25 +169,38 @@ import { ArrowRight, Menu } from "@lucide/astro";
     if (trigger) {
         observer.observe(trigger);
     }
+</script>
 
-    function startHeroVideo() {
-        const desktopVideo = document.getElementById(
-            "hero-desktop",
-        ) as HTMLVideoElement;
-        const mobileVideo = document.getElementById(
-            "hero-mobile",
-        ) as HTMLVideoElement;
-        const activeVideo =
-            window.innerWidth <= 640 ? mobileVideo : desktopVideo;
+<script>
+    let currentVideo: HTMLVideoElement | null = null;
 
-        if (!activeVideo) return;
+    function playCorrectVideo() {
+        const isMobile = window.matchMedia("(max-width: 640px)").matches;
 
-        activeVideo.play().catch(() => {});
+        const targetVideo = isMobile
+            ? (document.getElementById("hero-mobile") as HTMLVideoElement)
+            : (document.getElementById("hero-desktop") as HTMLVideoElement);
 
-        activeVideo.classList.add("playing");
+        if (currentVideo === targetVideo)
+            if (currentVideo) {
+                currentVideo.pause();
+            }
+
+        if (targetVideo) {
+            targetVideo.play().catch(() => {});
+            currentVideo = targetVideo;
+        }
     }
 
-    window.addEventListener("load", () => {
-        startHeroVideo();
+    function init() {
+        playCorrectVideo();
+    }
+
+    let resizeTimeout: number;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(playCorrectVideo, 150);
     });
+
+    window.addEventListener("load", init);
 </script>

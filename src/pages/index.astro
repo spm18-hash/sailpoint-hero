@@ -74,24 +74,24 @@ import { ArrowRight, Menu } from "@lucide/astro";
                     class="w-full sm:max-w-4xl lg:max-w-5xl 2xl:max-w-7xl -mb-1.5 overflow-hidden outline-8 rounded-t-4xl outline-[#54c0e840]"
                 >
                     <video
-                        autoplay
                         muted
                         loop
                         playsinline
                         disablepictureinpicture
                         preload="none"
+                        id="hero-desktop"
                         class="max-sm:hidden w-full object-top h-130 object-cover"
                     >
                         <source src="/videos/hero.webm" type="video/webm" />
                         <source src="/videos/hero.mp4" type="video/mp4" />
                     </video>
                     <video
-                        autoplay
                         muted
                         loop
                         playsinline
                         disablepictureinpicture
                         preload="none"
+                        id="hero-mobile"
                         class="w-full object-top sm:hidden h-120 object-cover rounded-t-4xl"
                     >
                         <source
@@ -142,6 +142,8 @@ import { ArrowRight, Menu } from "@lucide/astro";
 </style>
 
 <script>
+    import { startsWith } from "astro:schema";
+
     const header = document.querySelector("header");
     const trigger = document.querySelector("#scroll-trigger");
     const logoWhite = document.querySelector(".logo-white");
@@ -167,4 +169,25 @@ import { ArrowRight, Menu } from "@lucide/astro";
     if (trigger) {
         observer.observe(trigger);
     }
+
+    function startHeroVideo() {
+        const desktopVideo = document.getElementById(
+            "hero-desktop",
+        ) as HTMLVideoElement;
+        const mobileVideo = document.getElementById(
+            "hero-mobile",
+        ) as HTMLVideoElement;
+        const activeVideo =
+            window.innerWidth <= 640 ? mobileVideo : desktopVideo;
+
+        if (!activeVideo) return;
+
+        activeVideo.play().catch(() => {});
+
+        activeVideo.classList.add("playing");
+    }
+
+    window.addEventListener("load", () => {
+        startHeroVideo();
+    });
 </script>
